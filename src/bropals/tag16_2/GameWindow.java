@@ -52,11 +52,19 @@ public class GameWindow {
 		);
 		frame.setLocationRelativeTo(null);
 	}
+
+	/**
+		Updates the reported mouse position
+	*/
+	public void updateMousePosition() {
+		Point p = frame.getMousePosition();
+		mousePositionX = p.x-frame.getInsets().left;
+		mousePositionY = p.y-frame.getInsets().top;
+	}
 	
 	public static GameWindow getGameWindow() {
 		return window;
 	}
-	
 	
 	public int getMousePositionX() {
 		return mousePositionX;

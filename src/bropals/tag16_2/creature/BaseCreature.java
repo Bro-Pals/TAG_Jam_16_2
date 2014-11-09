@@ -1,5 +1,7 @@
 package bropals.tag16_2.creature;
 
+import bropals.tag16_2.Animation;
+
 /**
 	The basic enemy skeleton
 */
@@ -40,6 +42,14 @@ public abstract class BaseCreature {
 	*/
 	public float getAngle() {
 		return angle;
+	}
+	
+	public Animation getAnimation() {
+		return animation;
+	}
+	
+	public void setAnimation(Animation animation) {
+		this.animation = animation;
 	}
 }
 
