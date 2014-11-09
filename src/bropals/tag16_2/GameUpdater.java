@@ -22,11 +22,11 @@ public class GameUpdater {
 	public void updateGame() {
 		for (int i=0; i<enemies.size(); i++) {
 			BaseCreature bc = enemies.get(i);
-			bc.update();
+			bc.update(enemies, ironclad, projectiles);
 		}
 		
 		for (int i=0; i<projectiles.size(); i++) {
-			projectiles.get(i).update();
+			projectiles.get(i).update(enemies, ironclad, projectiles);
 		}
 	}
 	
