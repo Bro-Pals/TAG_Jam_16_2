@@ -24,7 +24,6 @@ public class Ironclad extends BaseCreature {
 	public void update() {
 		super.update();
 		
-<<<<<<< HEAD
 		Point mousePos = GameWindow.getGameWindow().getMousePosition();
 		
 		// get da vector of the mouse pos relative to the ironclad
@@ -53,8 +52,6 @@ public class Ironclad extends BaseCreature {
 				fire(3, firingDirection);
 			}
 		}
-=======
->>>>>>> dd2f328313a0988577376bcfa86fb4743365887f
 	}
 	
 	public void fire(int cannonNum, boolean left) {
