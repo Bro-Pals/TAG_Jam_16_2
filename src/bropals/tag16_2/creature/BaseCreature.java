@@ -19,7 +19,7 @@ public abstract class BaseCreature {
 		this.speed = 0;
 	}
 	
-	public void update() {
+	public void update(ArrayList<BaseCreature> enemies, BaseCreature ironclad, ArrayList<Projectile> projectiles) {
 		this.x += Math.cos(this.angle);
 		this.y += Math.sin(this.angle);
 	}

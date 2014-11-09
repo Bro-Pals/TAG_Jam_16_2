@@ -2,6 +2,7 @@ package bropals.tag16_2.creature;
 
 import bropals.tag16_2.Animation;
 import bropals.tag16_2.projectile.*;
+import java.util.ArrayList;
 
 /**
 	The player's boat thing
@@ -12,6 +13,7 @@ public class Ironclad extends BaseCreature {
 	private final float CANNON_OFFSET = 30; // pixels
 	private final float FIRE_DELAY = 75; // frames
 	private final float BETWEEN_CANNONS_DELAY = 12; // frames
+	private final float SPEED = 5;
 	
 	private float secondCannonTimer, thirdCannonTimer, superCannonTimer, speed, turnSpeed;
 	private boolean firingDirection = false; // variable for the direction the cannons are being fired
@@ -22,11 +24,11 @@ public class Ironclad extends BaseCreature {
 		thirdCannonTimer = -1;
 		superCannonTimer = -1;
 		
-		speed = 5;
+		speed = SPEED;
 		turnSpeed = Math.pi/16;
 	}
 	
-	public void update() {
+	public void update(ArrayList<BaseCreature> enemies, BaseCreature ironclad, ArrayList<Projectile> projectiles) {
 		super.update();
 		
 		Point mousePos = GameWindow.getGameWindow().getMousePosition();
@@ -38,10 +40,18 @@ public class Ironclad extends BaseCreature {
 		diffX = diffX/mag;
 		diffY = diffY/mag;
 		
+		// don't move when you're too close to the mouse
+		if (mag > 20) {
+			speed = SPEED;
+		} else {
+			speed = 0;
+		}
+		
 		float dp = (Math.sin(getAngle() + (Math.PI/2)) * diffY) + 
 			(Math.cos(getAngle() + (Math.PI/2)) * diffX); // transform if pi/2
 		
-		if (Math.abs(dp) < 0.2) {
+		// turning the boat based on where the mouse is compared to the boat.
+		if (Math.abs(dp) > 0.85) { // only turn if you need to keep turning
 			if (dp < 0) {
 				setAngle(getAngle() + turnSpeed);
 			} else {
