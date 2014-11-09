@@ -25,7 +25,8 @@ public class Projectile {
 		if (enemyProjectile) {
 			if (ironclad.pointCollidesWith(this.x, this.y)) {
 				//Damage the iron clad
-				
+				ironclad.damage(this.damage);
+				projectiles.remove(this);
 			}
 		} else {
 			
