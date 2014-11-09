@@ -27,7 +27,7 @@ public class Ironclad extends BaseCreature {
 		superCannonTimer = -1;
 		
 		setSpeed(SPEED);
-		turnSpeed = (float)Math.PI/10;
+		turnSpeed = (float)Math.PI/32;
 	}
 	
 	public void update(ArrayList<BaseCreature> enemies, BaseCreature ironclad, ArrayList<Projectile> projectiles) {
@@ -43,29 +43,35 @@ public class Ironclad extends BaseCreature {
 		diffY = diffY/mag;
 		
 		// don't move when you're too close to the mouse
-		if (mag > 20) {
+		if (mag > 40) {
 			setSpeed(SPEED);
 		} else {
 			setSpeed(0);
 		}
 		
-		// dot product
-		float dpShift = (float)(Math.sin(getAngle() - (Math.PI/2)) * diffY) + 
-			(float)(Math.cos(getAngle() - (Math.PI/2)) * diffX); 
-		float dp = (float)(Math.sin(getAngle()) * diffY) + 
-			(float)(Math.cos(getAngle()) * diffX); 
-		System.out.println("Dot product: " + dp);
+		float desiredAngle = (float)Math.asin(diffY); // from pi/2 to -pi/2
+		if (diffX < 0) {
+			desiredAngle = (float)Math.PI - desiredAngle;
+		}
+		if (desiredAngle < 0) {
+			desiredAngle += (float)(Math.PI * 2);
+		}
 		
-		// turning the boat based on where the mouse is compared to the boat.
-		if (dp < 0.1) { // only turn if you need to keep turning
-			if (dpShift > 0) {
-				setAngle(getAngle() + turnSpeed);
-			} else {
+		float angleDiff = desiredAngle - getAngle();
+
+		if (angleDiff > Math.PI) {
+			angleDiff = (float)Math.PI - angleDiff;
+		} else if (angleDiff < -Math.PI) {
+			angleDiff = -1 * (angleDiff + (float)Math.PI);
+		}
+		
+		if (Math.abs(angleDiff) > Math.PI/10) {
+			if (angleDiff < 0) {
 				setAngle(getAngle() - turnSpeed);
+			} else {
+				setAngle(getAngle() + turnSpeed);
 			}
-		} 
-		
-		System.out.println("ANGLE: " + getAngle());
+		}
 		
 		superCannonTimer--; // decrease the timer between firing
 		// fire the second cannon when the timer runs out

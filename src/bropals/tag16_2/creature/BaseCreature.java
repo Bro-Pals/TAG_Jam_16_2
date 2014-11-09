@@ -67,6 +67,12 @@ public abstract class BaseCreature {
 	}
 	
 	public void setAngle(float a) {
+		while (a > (2 * Math.PI)) {
+			a -= (2 * Math.PI);
+		}
+		while (a < 0) {
+			a += (2 * Math.PI);
+		}
 		angle = a;
 	}
 	
