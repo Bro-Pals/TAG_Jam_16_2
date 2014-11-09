@@ -9,6 +9,7 @@ import bropals.tag16_2.projectile.*;
 import bropals.tag16_2.creature.*;
 import java.awt.Color;
 import bropals.tag16_2.Animation;
+import java.awt.event.MouseEvent;
 
 public class GameUpdater {
 	
@@ -46,7 +47,12 @@ public class GameUpdater {
 			projectiles.get(i).update(enemies, ironclad, projectiles);
 		}
 		
-		
+		int mouseButton = GameWindow.getGameWindow().getMouseButton();
+		if (mouseButton == MouseEvent.BUTTON1) {
+			ironclad.fire(1, false, projectiles);
+		} else if (mouseButton == MouseEvent.BUTTON2 || mouseButton == MouseEvent.BUTTON3) {
+			ironclad.fire(1, true, projectiles);
+		}	
 	}
 	
 	public void drawGame() {
@@ -61,6 +67,12 @@ public class GameUpdater {
 		for (int i=0; i<enemies.size(); i++) {
 			drawCreature(g, enemies.get(i));
 		}
+		
+		for (int i=0; i<projectiles.size(); i++) {
+			g.setColor(projectiles.get(i).getColor());
+			g.fillOval((int)projectiles.get(i).getX() - 2, 
+						(int)projectiles.get(i).getY() - 2, 4, 4);
+		}
 		GameWindow.getGameWindow().swapBuffers(g);
 	}
 	
@@ -70,14 +82,15 @@ public class GameUpdater {
 		image = bc.getAnimation().getCurrentFrame();
 		
 		//  Rotate the image and then draw it  //
-		//g.translate(-bc.getX(), -bc.getY());
-		//g.rotate(bc.getAngle());
-		g.drawImage(image, (int)bc.getX()-(image.getWidth()/2), (int)bc.getY()-(image.getHeight()/2), null);
+		g.translate(bc.getX(), bc.getY());
+		g.rotate(bc.getAngle() + (Math.PI / 2));
+		g.drawImage(image, -(image.getWidth()/2), -(image.getHeight()/2), null);
+		g.rotate(-bc.getAngle() - (Math.PI / 2));
+		g.translate(-bc.getX(), -bc.getY()); // move it back
+		
 		g.setColor(Color.MAGENTA);
 		g.drawLine((int)bc.getX(), (int)bc.getY(), (int)bc.getX() + (int)(Math.cos(bc.getAngle()) * 20), 
 									(int)bc.getY() + (int)(Math.sin(bc.getAngle()) * 20));
-		//g.rotate(-bc.getAngle());
-		//g.translate(bc.getX(), bc.getY()); // move it back
 	}
 	
 	public void loop() {

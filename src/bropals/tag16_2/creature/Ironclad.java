@@ -27,7 +27,7 @@ public class Ironclad extends BaseCreature {
 		superCannonTimer = -1;
 		
 		setSpeed(SPEED);
-		turnSpeed = (float)Math.PI/32;
+		turnSpeed = (float)Math.PI/48;
 	}
 	
 	public void update(ArrayList<BaseCreature> enemies, BaseCreature ironclad, ArrayList<Projectile> projectiles) {
@@ -65,7 +65,7 @@ public class Ironclad extends BaseCreature {
 			angleDiff = -1 * (angleDiff + (float)Math.PI);
 		}
 		
-		if (Math.abs(angleDiff) > Math.PI/10) {
+		if (Math.abs(angleDiff) > Math.PI/22) {
 			if (angleDiff < 0) {
 				setAngle(getAngle() - turnSpeed);
 			} else {
@@ -91,9 +91,17 @@ public class Ironclad extends BaseCreature {
 	}
 	
 	public void fire(int cannonNum, boolean left, ArrayList<Projectile> projectiles) {
-		if (superCannonTimer > 0) {
+		if (cannonNum == 1 && superCannonTimer > 0) {
 			return; // can't fire because it's still on cooldown
 		}
+		superCannonTimer = FIRE_DELAY; // reset the timer for the cannon shooting
+		
+		if (left) {
+			System.out.println("Firing left");
+		} else {
+			System.out.println("Firing right");
+		}
+		
 		// the direction the cannon is fired
 		float angle = left ? getAngle() + (float)(Math.PI/2) : getAngle() - (float)(Math.PI/2);
 		firingDirection = left;
