@@ -57,14 +57,6 @@ public class GameWindow {
 		return window;
 	}
 	
-	/**
-		Get the mouse's position on the window
-	*/
-	public static Point getMousePosition() {
-		Point mp = MouseInfo.getPointerInfo().getLocation();
-		mp.translate(0, 0);
-		return MouseInfo.getPointerInfo().getLocation();
-	}
 	
 	public int getMousePositionX() {
 		return mousePositionX;
