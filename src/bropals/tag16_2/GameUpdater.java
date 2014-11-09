@@ -52,7 +52,7 @@ public class GameUpdater {
 				try {
 					Thread.sleep(mpf - delta);
 				} catch(Exception e) {
-					
+					System.out.println("Error in GameUpdater with sleeping");
 				}
 			}
 		}

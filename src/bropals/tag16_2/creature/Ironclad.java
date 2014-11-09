@@ -105,7 +105,7 @@ public class Ironclad extends BaseCreature {
 		startingPosX += Math.cos(angle) * 20;
 		startingPosY += Math.sin(angle) * 20;
 		
-																						// not enemy, 2 damage
+																					  // not enemy, 2 damage
 		projectiles.add(new Projectile(startingPosX, startingPosY, angle, CANNONBALL_SPEED, false, 2));
 	}
 }
