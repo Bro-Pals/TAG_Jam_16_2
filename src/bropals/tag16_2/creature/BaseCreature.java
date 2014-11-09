@@ -10,7 +10,9 @@ import bropals.tag16_2.projectile.*;
 public abstract class BaseCreature {
 	
 	private float x, y, w, h, angle, speed;
+	private int hits;
 	private Animation animation;
+	private boolean alive;
 	
 	public BaseCreature(float x, float y, float w, float h) {
 		this.x=x;
@@ -19,11 +21,24 @@ public abstract class BaseCreature {
 		this.h=h;
 		this.angle = 0; // start at angle 0
 		this.speed = 0;
+		this.hits = 0;
+		this.alive = true;
 	}
 	
 	public void update(ArrayList<BaseCreature> enemies, BaseCreature ironclad, ArrayList<Projectile> projectiles) {
 		this.x += Math.cos(this.angle);
 		this.y += Math.sin(this.angle);
+	}
+	
+	public void damage(int dmg) {
+		hits -= dmg;
+		if (hits<=0) {
+			alive = false;
+		}
+	}
+	
+	public boolean isAlive() {
+		return alive;
 	}
 	
 	public float getX() { return x; }
@@ -37,6 +52,11 @@ public abstract class BaseCreature {
 	public void setWidth(float w) { this.w=w; }
 	public void setHeight(float h) { this.h=h; }
 	public void setSpeed(float s) { this.speed=s; }
+	
+	
+	public boolean pointCollidesWith(float x, float y) {
+		return x > this.x && x < this.x+this.w && y > this.y && y < this.y+this.h;
+	}
 	
 	/**
 		return the direction the player is facing in radians
