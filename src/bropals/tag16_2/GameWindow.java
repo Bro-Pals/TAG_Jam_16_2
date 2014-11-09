@@ -51,7 +51,7 @@ public class GameWindow {
 				mouseBufferX = e.getX()-frame.getInsets().left;
 				mouseBufferY = e.getY()-frame.getInsets().top;
 				mousePressed = false;
-				mouseButton = e.getButton();
+				//mouseButton = e.getButton();
 			}
 		});
 		frame.addWindowListener(new WindowAdapter() {
@@ -123,7 +123,10 @@ public class GameWindow {
 		return mousePressed;
 	}
 	
+	
 	public int getMouseButton() {
-		return mouseButton;
+		int button = mouseButton;
+		mouseButton = -1;
+		return button; // so after it's gotten the event is done for
 	}
 }

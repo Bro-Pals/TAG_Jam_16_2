@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import bropals.tag16_2.projectile.*;
 import bropals.tag16_2.creature.*;
 import java.awt.Color;
+import bropals.tag16_2.Animation;
 
 public class GameUpdater {
 	
@@ -26,9 +27,15 @@ public class GameUpdater {
 		projectiles = new ArrayList<>();
 		at = new AffineTransform();
 		lake = Assets.getAssets().getImage("images/Lake.png");
+		BufferedImage ironcladImage = Assets.getAssets().getImage("images/Ironclad.png");
+		
+		ironclad = new Ironclad(300, 230, 70, 120);
+		ironclad.setAnimation(new Animation(new BufferedImage[][]{{ironcladImage}}));
 	}
 	
 	public void updateGame() {
+		ironclad.update(enemies, ironclad, projectiles);
+		
 		for (int i=0; i<enemies.size(); i++) {
 			BaseCreature bc = enemies.get(i);
 			bc.getAnimation().update(mpf);
@@ -38,6 +45,8 @@ public class GameUpdater {
 		for (int i=0; i<projectiles.size(); i++) {
 			projectiles.get(i).update(enemies, ironclad, projectiles);
 		}
+		
+		
 	}
 	
 	public void drawGame() {
@@ -48,21 +57,27 @@ public class GameUpdater {
 		g.setColor(Color.WHITE);
 		g.fillRect(GameWindow.getGameWindow().getMousePositionX(), GameWindow.getGameWindow().getMousePositionY(), 10, 10);
 		
-		BaseCreature bc;
-		BufferedImage image;
-		float angle;
+		drawCreature(g, ironclad);
 		for (int i=0; i<enemies.size(); i++) {
-			at.setToIdentity();
-			bc = enemies.get(i);
-			image = bc.getAnimation().getCurrentFrame();
-			angle = bc.getAngle();
-			//  Rotate the image and then draw it  //
-			at.rotate(angle);
-			at.translate(bc.getX(), bc.getY());
-			g.setTransform(at);
-			g.drawImage(image, -(image.getWidth()/2), -(image.getHeight()/2), null);
+			drawCreature(g, enemies.get(i));
 		}
 		GameWindow.getGameWindow().swapBuffers(g);
+	}
+	
+	private void drawCreature(Graphics2D g, BaseCreature bc) {
+		BufferedImage image;
+		at.setToIdentity();
+		image = bc.getAnimation().getCurrentFrame();
+		
+		//  Rotate the image and then draw it  //
+		//g.translate(-bc.getX(), -bc.getY());
+		//g.rotate(bc.getAngle());
+		g.drawImage(image, (int)bc.getX()-(image.getWidth()/2), (int)bc.getY()-(image.getHeight()/2), null);
+		g.setColor(Color.MAGENTA);
+		g.drawLine((int)bc.getX(), (int)bc.getY(), (int)bc.getX() + (int)(Math.cos(bc.getAngle()) * 20), 
+									(int)bc.getY() + (int)(Math.sin(bc.getAngle()) * 20));
+		//g.rotate(-bc.getAngle());
+		//g.translate(bc.getX(), bc.getY()); // move it back
 	}
 	
 	public void loop() {

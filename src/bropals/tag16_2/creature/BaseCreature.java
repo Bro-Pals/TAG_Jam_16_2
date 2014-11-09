@@ -19,15 +19,15 @@ public abstract class BaseCreature {
 		this.y=y;
 		this.w=w;
 		this.h=h;
-		this.angle = 0; // start at angle 0
+		this.angle = -(float)Math.PI/3; // start at angle 0
 		this.speed = 0;
 		this.hits = hitsToTake;
 		this.alive = true;
 	}
 	
 	public void update(ArrayList<BaseCreature> enemies, BaseCreature ironclad, ArrayList<Projectile> projectiles) {
-		this.x += Math.cos(this.angle);
-		this.y += Math.sin(this.angle);
+		this.x += Math.cos(this.angle) * getSpeed();
+		this.y += Math.sin(this.angle) * getSpeed();
 	}
 	
 	public void damage(int dmg) {

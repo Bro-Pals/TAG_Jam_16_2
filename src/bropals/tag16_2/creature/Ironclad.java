@@ -15,9 +15,9 @@ public class Ironclad extends BaseCreature {
 	private final float CANNON_OFFSET = 30; // pixels
 	private final float FIRE_DELAY = 75; // frames
 	private final float BETWEEN_CANNONS_DELAY = 12; // frames
-	private final float SPEED = 5;
+	private final float SPEED = 2;
 	
-	private float secondCannonTimer, thirdCannonTimer, superCannonTimer, speed, turnSpeed;
+	private float secondCannonTimer, thirdCannonTimer, superCannonTimer, turnSpeed;
 	private boolean firingDirection = false; // variable for the direction the cannons are being fired
 	
 	public Ironclad(float x, float y, float w, float h) {
@@ -26,12 +26,14 @@ public class Ironclad extends BaseCreature {
 		thirdCannonTimer = -1;
 		superCannonTimer = -1;
 		
-		speed = SPEED;
-		turnSpeed = (float)Math.PI/16;
+		setSpeed(SPEED);
+		turnSpeed = (float)Math.PI/10;
 	}
 	
 	public void update(ArrayList<BaseCreature> enemies, BaseCreature ironclad, ArrayList<Projectile> projectiles) {
 		super.update(enemies, ironclad, projectiles);
+		
+		// the ironclad moves based on where the mouse cursor is.
 		
 		// get da vector of the mouse pos relative to the ironclad
 		float diffX = (float)GameWindow.getGameWindow().getMousePositionX() - getX();
@@ -42,23 +44,28 @@ public class Ironclad extends BaseCreature {
 		
 		// don't move when you're too close to the mouse
 		if (mag > 20) {
-			speed = SPEED;
+			setSpeed(SPEED);
 		} else {
-			speed = 0;
+			setSpeed(0);
 		}
 		
 		// dot product
-		float dp = (float)(Math.sin(getAngle() + (Math.PI/2)) * diffY) + 
-			(float)(Math.cos(getAngle() + (Math.PI/2)) * diffX); // transform if pi/2
+		float dpShift = (float)(Math.sin(getAngle() - (Math.PI/2)) * diffY) + 
+			(float)(Math.cos(getAngle() - (Math.PI/2)) * diffX); 
+		float dp = (float)(Math.sin(getAngle()) * diffY) + 
+			(float)(Math.cos(getAngle()) * diffX); 
+		System.out.println("Dot product: " + dp);
 		
 		// turning the boat based on where the mouse is compared to the boat.
-		if (Math.abs(dp) > 0.85) { // only turn if you need to keep turning
-			if (dp < 0) {
+		if (dp < 0.1) { // only turn if you need to keep turning
+			if (dpShift > 0) {
 				setAngle(getAngle() + turnSpeed);
 			} else {
 				setAngle(getAngle() - turnSpeed);
 			}
-		}
+		} 
+		
+		System.out.println("ANGLE: " + getAngle());
 		
 		superCannonTimer--; // decrease the timer between firing
 		// fire the second cannon when the timer runs out
