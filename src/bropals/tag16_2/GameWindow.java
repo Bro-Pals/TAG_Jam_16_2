@@ -6,10 +6,13 @@ import java.awt.image.BufferStrategy;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Frame;
+import java.awt.Point;
+import java.awt.MouseInfo;
 
 public class GameWindow {
 	
 	public static final int SCREEN_WIDTH = 800, SCREEN_HEIGHT = 600;
+	private static GameWindow window = new GameWindow();
 	
 	private Frame frame;
 	
@@ -48,6 +51,19 @@ public class GameWindow {
 			SCREEN_HEIGHT+frame.getInsets().top+frame.getInsets().bottom
 		);
 		frame.setLocationRelativeTo(null);
+	}
+	
+	public static GameWindow getGameWindow() {
+		return window;
+	}
+	
+	/**
+		Get the mouse's position on the window
+	*/
+	public static Point getMousePosition() {
+		Point mp = MouseInfo.getPointerInfo().getLocation();
+		mp.translate(0, 0);
+		return MouseInfo.getPointerInfo().getLocation();
 	}
 	
 	public int getMousePositionX() {
