@@ -3,10 +3,15 @@ package bropals.tag16_2;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferStrategy;
 import java.awt.event.MouseAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Frame;
 import java.awt.Point;
+import java.awt.MouseInfo;
+import java.awt.event.MouseAdapter;
 import java.awt.MouseInfo;
 
 public class GameWindow {
@@ -21,13 +26,17 @@ public class GameWindow {
 	private int mouseBufferX;
 	private int mouseBufferY;
 	private boolean mousePressed;
+	private int mouseButton;
+	private BufferStrategy bs;
 	
 	public GameWindow() {
 		mousePositionX = 0;
 		mousePositionY = 0;
 		mouseBufferX = 0;
 		mouseBufferY = 0;
+		mouseButton = -1;
 		mousePressed = false;
+		bs = null;
 		frame = new Frame("Ironclad vs. Sea monsters");
 		frame.addMouseListener(new MouseAdapter() {
 			@Override
@@ -35,12 +44,20 @@ public class GameWindow {
 				mouseBufferX = e.getX()-frame.getInsets().left;
 				mouseBufferY = e.getY()-frame.getInsets().top;
 				mousePressed = true;
+				mouseButton = e.getButton();
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				mouseBufferX = e.getX()-frame.getInsets().left;
 				mouseBufferY = e.getY()-frame.getInsets().top;
 				mousePressed = false;
+				mouseButton = e.getButton();
+			}
+		});
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
 			}
 		});
 		frame.setIgnoreRepaint(true);
@@ -50,9 +67,23 @@ public class GameWindow {
 			SCREEN_WIDTH+frame.getInsets().left+frame.getInsets().right,
 			SCREEN_HEIGHT+frame.getInsets().top+frame.getInsets().bottom
 		);
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 	}
 
+	public Graphics getDrawGraphics() {
+		if (bs==null) {
+			frame.createBufferStrategy(2);
+			bs = frame.getBufferStrategy();
+		}
+		return bs.getDrawGraphics();
+	}
+	
+	public void swapBuffers(Graphics g) {
+		g.dispose();
+		bs.show();
+	}
+	
 	/**
 		Updates the reported mouse position
 	*/
@@ -84,5 +115,11 @@ public class GameWindow {
 		return mouseBufferY;
 	}
 	
+	public boolean getMousePressed() {
+		return mousePressed;
+	}
 	
+	public int getMouseButton() {
+		return mouseButton;
+	}
 }
