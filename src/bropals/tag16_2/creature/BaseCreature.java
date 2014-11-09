@@ -20,7 +20,6 @@ public abstract class BaseCreature {
 	public void update() {
 		this.x += Math.cos(this.angle);
 		this.y += Math.sin(this.angle);
-		
 	}
 	
 	public float getX() { return x; }
