@@ -5,6 +5,8 @@ package bropals.tag16_2.creature;
 */
 public class GrapeEnemy extends BaseCreature {
 	
-	
+	public GrapeEnemy(float x, float y, float w, float h) {
+		super(x, y, w, h);
+	}
 }
 

@@ -13,14 +13,21 @@ public class GameUpdater {
 	
 	public GameUpdater() {
 		running = false;
+		enemies = new ArrayList<BaseCreature>();
 	}
 	
 	public void updateGame() {
-		
+		for (int i=0; i<enemies.size(); i++) {
+			BaseCreature bc = enemies.get(i);
+			bc.update();
+		}
 	}
 	
 	public void drawGame() {
-		
+		for (int i=0; i<enemies.size(); i++) {
+			BaseCreature bc = enemies.get(i);
+			
+		}
 	}
 	
 	public void loop() {
@@ -28,6 +35,8 @@ public class GameUpdater {
 		long before, delta;
 		while(running) {
 			before = System.currentTimeMillis();
+			//Upate the value
+			GameWindow.getGameWindow().updateMousePosition();
 			updateGame();
 			drawGame();
 			delta = System.currentTimeMillis()-before;

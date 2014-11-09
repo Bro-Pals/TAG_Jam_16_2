@@ -53,17 +53,17 @@ public class GameWindow {
 		frame.setLocationRelativeTo(null);
 	}
 	
-	public static GameWindow getGameWindow() {
-		return window;
+	/**
+		Updates the reported mouse position
+	*/
+	public void updateMousePosition() {
+		Point p = frame.getMousePosition();
+		mousePositionX = p.x-frame.getInsets().left;
+		mousePositionY = p.y-frame.getInsets().top;
 	}
 	
-	/**
-		Get the mouse's position on the window
-	*/
-	public static Point getMousePosition() {
-		Point mp = MouseInfo.getPointerInfo().getLocation();
-		mp.translate(0, 0);
-		return MouseInfo.getPointerInfo().getLocation();
+	public static GameWindow getGameWindow() {
+		return window;
 	}
 	
 	public int getMousePositionX() {

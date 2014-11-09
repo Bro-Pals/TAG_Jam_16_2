@@ -1,5 +1,7 @@
 package bropals.tag16_2.creature;
 
+import bropals.tag16_2.Animation;
+
 /**
 	The player's boat thing
 */
@@ -12,7 +14,6 @@ public class Ironclad extends BaseCreature {
 	public void update() {
 		super.update();
 		
-		Point mousePos = GameWindow.getGameWindow().getMousePosition();
 	}
 	
 }
