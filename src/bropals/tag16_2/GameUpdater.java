@@ -31,6 +31,7 @@ public class GameUpdater {
 	}
 	
 	public void drawGame() {
+		
 		for (int i=0; i<enemies.size(); i++) {
 			BaseCreature bc = enemies.get(i);
 			
