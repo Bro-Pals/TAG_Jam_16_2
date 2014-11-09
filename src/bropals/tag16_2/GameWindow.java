@@ -58,8 +58,10 @@ public class GameWindow {
 	*/
 	public void updateMousePosition() {
 		Point p = frame.getMousePosition();
-		mousePositionX = p.x-frame.getInsets().left;
-		mousePositionY = p.y-frame.getInsets().top;
+		if (p != null) { // it has the possibility of returning null
+			mousePositionX = p.x-frame.getInsets().left;
+			mousePositionY = p.y-frame.getInsets().top;
+		}
 	}
 	
 	public static GameWindow getGameWindow() {

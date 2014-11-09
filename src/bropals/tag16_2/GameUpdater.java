@@ -2,10 +2,12 @@ package bropals.tag16_2;
 
 import bropals.tag16_2.creature.*;
 import java.util.ArrayList;
+import bropals.tag16_2.projectile.*;
 
 public class GameUpdater {
 	
 	private ArrayList<BaseCreature> enemies;
+	private ArrayList<Projectile> projectiles;
 	private Ironclad ironclad;
 	
 	private boolean running;
@@ -14,12 +16,17 @@ public class GameUpdater {
 	public GameUpdater() {
 		running = false;
 		enemies = new ArrayList<BaseCreature>();
+		projectiles = new ArrayList<>();
 	}
 	
 	public void updateGame() {
 		for (int i=0; i<enemies.size(); i++) {
 			BaseCreature bc = enemies.get(i);
 			bc.update();
+		}
+		
+		for (int i=0; i<projectiles.size(); i++) {
+			projectiles.get(i).update();
 		}
 	}
 	
