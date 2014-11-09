@@ -14,14 +14,14 @@ public abstract class BaseCreature {
 	private Animation animation;
 	private boolean alive;
 	
-	public BaseCreature(float x, float y, float w, float h) {
+	public BaseCreature(float x, float y, float w, float h, int hitsToTake) {
 		this.x=x;
 		this.y=y;
 		this.w=w;
 		this.h=h;
 		this.angle = 0; // start at angle 0
 		this.speed = 0;
-		this.hits = 0;
+		this.hits = hitsToTake;
 		this.alive = true;
 	}
 	

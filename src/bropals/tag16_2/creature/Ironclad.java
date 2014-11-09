@@ -21,7 +21,7 @@ public class Ironclad extends BaseCreature {
 	private boolean firingDirection = false; // variable for the direction the cannons are being fired
 	
 	public Ironclad(float x, float y, float w, float h) {
-		super(x, y, w, h);
+		super(x, y, w, h, 100); // 100 health
 		secondCannonTimer = -1;
 		thirdCannonTimer = -1;
 		superCannonTimer = -1;
@@ -47,6 +47,7 @@ public class Ironclad extends BaseCreature {
 			speed = 0;
 		}
 		
+		// dot product
 		float dp = (float)(Math.sin(getAngle() + (Math.PI/2)) * diffY) + 
 			(float)(Math.cos(getAngle() + (Math.PI/2)) * diffX); // transform if pi/2
 		
@@ -60,23 +61,23 @@ public class Ironclad extends BaseCreature {
 		}
 		
 		superCannonTimer--; // decrease the timer between firing
-
+		// fire the second cannon when the timer runs out
 		if (secondCannonTimer > 0) {
 			secondCannonTimer--;
 			if (secondCannonTimer <= 0) {
-				fire(2, firingDirection);
+				fire(2, firingDirection, projectiles);
 			}
 		}
-		
+		// fire the third cannon when the timer runs out
 		if (thirdCannonTimer > 0) {
 			thirdCannonTimer--;
 			if (thirdCannonTimer <= 0) {
-				fire(3, firingDirection);
+				fire(3, firingDirection, projectiles);
 			}
 		}
 	}
 	
-	public void fire(int cannonNum, boolean left) {
+	public void fire(int cannonNum, boolean left, ArrayList<Projectile> projectiles) {
 		if (superCannonTimer > 0) {
 			return; // can't fire because it's still on cooldown
 		}
@@ -91,6 +92,8 @@ public class Ironclad extends BaseCreature {
 		if (cannonNum == 1) {
 			startingPosX = getX() - (float)(Math.cos(getAngle()) * CANNON_OFFSET);
 			startingPosY = getY() - (float)(Math.sin(getAngle()) * CANNON_OFFSET);
+			secondCannonTimer = BETWEEN_CANNONS_DELAY;
+			thirdCannonTimer = BETWEEN_CANNONS_DELAY * 2; // set the timers after the first cannon fires
 		}else if (cannonNum == 2) {
 			startingPosX = getX();
 			startingPosY = getY();
@@ -102,7 +105,8 @@ public class Ironclad extends BaseCreature {
 		startingPosX += Math.cos(angle) * 20;
 		startingPosY += Math.sin(angle) * 20;
 		
-		
+																						// not enemy, 2 damage
+		projectiles.add(new Projectile(startingPosX, startingPosY, angle, CANNONBALL_SPEED, false, 2));
 	}
 }
 
