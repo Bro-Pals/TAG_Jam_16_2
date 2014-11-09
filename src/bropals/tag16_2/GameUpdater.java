@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import bropals.tag16_2.projectile.*;
 import bropals.tag16_2.creature.*;
+import java.awt.Color;
 
 public class GameUpdater {
 	
@@ -14,6 +15,7 @@ public class GameUpdater {
 	private ArrayList<Projectile> projectiles;
 	private Ironclad ironclad;
 	private AffineTransform at;
+	private BufferedImage lake;
 	
 	private boolean running;
 	private final long mpf = 20;
@@ -23,6 +25,7 @@ public class GameUpdater {
 		enemies = new ArrayList<BaseCreature>();
 		projectiles = new ArrayList<>();
 		at = new AffineTransform();
+		lake = Assets.getAssets().getImage("images/Lake.png");
 	}
 	
 	public void updateGame() {
@@ -39,6 +42,12 @@ public class GameUpdater {
 	
 	public void drawGame() {
 		Graphics2D g = (Graphics2D)GameWindow.getGameWindow().getDrawGraphics();
+		g.drawImage(lake, 0, 0, null);
+		
+		//Testing
+		g.setColor(Color.WHITE);
+		g.fillRect(GameWindow.getGameWindow().getMousePositionX(), GameWindow.getGameWindow().getMousePositionY(), 10, 10);
+		
 		BaseCreature bc;
 		BufferedImage image;
 		float angle;

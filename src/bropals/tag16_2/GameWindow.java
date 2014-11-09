@@ -63,10 +63,6 @@ public class GameWindow {
 		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
 		frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-		frame.setSize(
-			SCREEN_WIDTH+frame.getInsets().left+frame.getInsets().right,
-			SCREEN_HEIGHT+frame.getInsets().top+frame.getInsets().bottom
-		);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 	}
@@ -90,13 +86,21 @@ public class GameWindow {
 	public void updateMousePosition() {
 		Point p = frame.getMousePosition();
 		if (p != null) { // it has the possibility of returning null
-			mousePositionX = p.x-frame.getInsets().left;
-			mousePositionY = p.y-frame.getInsets().top;
+			mousePositionX = p.x;//-frame.getInsets().left;
+			mousePositionY = p.y;//-frame.getInsets().top;
 		}
 	}
 	
 	public static GameWindow getGameWindow() {
 		return window;
+	}
+	
+	public int getInsetsX() {
+		return frame.getInsets().left;
+	}
+	
+	public int getInsetsY() {
+		return frame.getInsets().right;
 	}
 	
 	public int getMousePositionX() {
