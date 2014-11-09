@@ -6,7 +6,7 @@ package bropals.tag16_2.creature;
 public class MeleeEnemy extends BaseCreature {
 	
 	public MeleeEnemy(float x, float y, float w, float h) {
-		super(x, y, w, h);
+		super(x, y, w, h, 5);
 	}
 }
 
