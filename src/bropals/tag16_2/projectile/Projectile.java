@@ -1,6 +1,8 @@
 package bropals.tag16_2.projectile;
 
 import java.util.ArrayList;
+import bropals.tag16_2.projectile.*;
+import bropals.tag16_2.creature.*;
 
 public class Projectile {
 	

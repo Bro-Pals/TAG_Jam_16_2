@@ -1,6 +1,8 @@
 package bropals.tag16_2.creature;
 
 import bropals.tag16_2.Animation;
+import java.util.ArrayList;
+import bropals.tag16_2.projectile.*;
 
 /**
 	The basic enemy skeleton
@@ -42,6 +44,10 @@ public abstract class BaseCreature {
 	*/
 	public float getAngle() {
 		return angle;
+	}
+	
+	public void setAngle(float a) {
+		angle = a;
 	}
 	
 	public Animation getAnimation() {

@@ -3,6 +3,8 @@ package bropals.tag16_2.creature;
 import bropals.tag16_2.Animation;
 import bropals.tag16_2.projectile.*;
 import java.util.ArrayList;
+import java.awt.Point;
+import bropals.tag16_2.GameWindow;
 
 /**
 	The player's boat thing
@@ -25,18 +27,16 @@ public class Ironclad extends BaseCreature {
 		superCannonTimer = -1;
 		
 		speed = SPEED;
-		turnSpeed = Math.pi/16;
+		turnSpeed = (float)Math.PI/16;
 	}
 	
 	public void update(ArrayList<BaseCreature> enemies, BaseCreature ironclad, ArrayList<Projectile> projectiles) {
-		super.update();
-		
-		Point mousePos = GameWindow.getGameWindow().getMousePosition();
+		super.update(enemies, ironclad, projectiles);
 		
 		// get da vector of the mouse pos relative to the ironclad
-		float diffX = (float)mousePos.getX() - getX();
-		float diffY = (float)mousePos.getY() - getY();
-		float mag = Math.sqrt((diffX * diffX) + (diffY * diffY));
+		float diffX = (float)GameWindow.getGameWindow().getMousePositionX() - getX();
+		float diffY = (float)GameWindow.getGameWindow().getMousePositionY() - getY();
+		float mag = (float)Math.sqrt((diffX * diffX) + (diffY * diffY));
 		diffX = diffX/mag;
 		diffY = diffY/mag;
 		
@@ -47,8 +47,8 @@ public class Ironclad extends BaseCreature {
 			speed = 0;
 		}
 		
-		float dp = (Math.sin(getAngle() + (Math.PI/2)) * diffY) + 
-			(Math.cos(getAngle() + (Math.PI/2)) * diffX); // transform if pi/2
+		float dp = (float)(Math.sin(getAngle() + (Math.PI/2)) * diffY) + 
+			(float)(Math.cos(getAngle() + (Math.PI/2)) * diffX); // transform if pi/2
 		
 		// turning the boat based on where the mouse is compared to the boat.
 		if (Math.abs(dp) > 0.85) { // only turn if you need to keep turning
@@ -81,7 +81,7 @@ public class Ironclad extends BaseCreature {
 			return; // can't fire because it's still on cooldown
 		}
 		// the direction the cannon is fired
-		float angle = left ? getAngle() + (Math.PI/2) : getAngle() - (Math.PI/2);
+		float angle = left ? getAngle() + (float)(Math.PI/2) : getAngle() - (float)(Math.PI/2);
 		firingDirection = left;
 		
 		// calculate the position of the cannonball
@@ -89,14 +89,14 @@ public class Ironclad extends BaseCreature {
 		float startingPosY = 0;
 		// change the offset of the starting position depending on the numbers
 		if (cannonNum == 1) {
-			startingPosX = getX() - (Math.cos(getAngle()) * CANNON_OFFSET);
-			startingPosY = getY() - (Math.sin(getAngle()) * CANNON_OFFSET);
+			startingPosX = getX() - (float)(Math.cos(getAngle()) * CANNON_OFFSET);
+			startingPosY = getY() - (float)(Math.sin(getAngle()) * CANNON_OFFSET);
 		}else if (cannonNum == 2) {
 			startingPosX = getX();
 			startingPosY = getY();
 		} else if(cannonNum == 3) {
-			startingPosX = getX() + (Math.cos(getAngle()) * CANNON_OFFSET);
-			startingPosY = getY() + (Math.sin(getAngle()) * CANNON_OFFSET);
+			startingPosX = getX() + (float)(Math.cos(getAngle()) * CANNON_OFFSET);
+			startingPosY = getY() + (float)(Math.sin(getAngle()) * CANNON_OFFSET);
 		}
 		
 		startingPosX += Math.cos(angle) * 20;

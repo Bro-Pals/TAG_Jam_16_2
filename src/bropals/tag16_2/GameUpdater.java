@@ -1,8 +1,8 @@
 package bropals.tag16_2;
 
-import bropals.tag16_2.creature.*;
 import java.util.ArrayList;
 import bropals.tag16_2.projectile.*;
+import bropals.tag16_2.creature.*;
 
 public class GameUpdater {
 	
@@ -22,11 +22,11 @@ public class GameUpdater {
 	public void updateGame() {
 		for (int i=0; i<enemies.size(); i++) {
 			BaseCreature bc = enemies.get(i);
-			bc.update();
+			bc.update(enemies, ironclad, projectiles);
 		}
 		
 		for (int i=0; i<projectiles.size(); i++) {
-			projectiles.get(i).update();
+			projectiles.get(i).update(enemies, ironclad, projectiles);
 		}
 	}
 	
